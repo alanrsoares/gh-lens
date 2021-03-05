@@ -2,3 +2,13 @@
   Command = "yarn build"
   Functions = "lambda"
   Publish = "build"
+
+[context.main.environment]
+  REACT_APP_GH_CLIENT_ID = "3c44cfed025aa0872b04"
+  REACT_APP_GH_CLIENT_SECRET = "6c14d9384768c5d6c1f68d479879a1a1d84021c5"
+  REACT_APP_GH_OAUTH_REDIRECT_URL = "https://gh-lens.netlify.app/"
+
+[context.develop.environment]
+  REACT_APP_GH_CLIENT_ID = "61bcbf0a23331c885af0"
+  REACT_APP_GH_CLIENT_SECRET = "4f9e76a45bccefdb4c4f03fc22b64e25e549b45c"
+  REACT_APP_GH_OAUTH_REDIRECT_URL = "http://localhost:8888"
