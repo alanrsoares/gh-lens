@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { createContainer } from "unstated-next";
 
+import client from "lib/github-client";
+
 export const GH_TOKEN_STORAGE_KEY = "gh-token";
 
 function useAppContainer() {
@@ -9,6 +11,7 @@ function useAppContainer() {
   const handleSignIn = useCallback((token: string) => {
     localStorage.setItem(GH_TOKEN_STORAGE_KEY, token);
     setIsAuthenticated(true);
+    client.setAuthorizationToken(token);
   }, []);
 
   const handleSignOut = useCallback(() => {

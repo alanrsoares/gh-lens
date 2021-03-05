@@ -1,17 +1,32 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-import "./index.css";
-import App from "./ui/compounds/App";
-import reportWebVitals from "./reportWebVitals";
+import reportWebVitals from "reportWebVitals";
+
+import App from "ui/compounds/App";
 import { Provider } from "state/app";
 
+import "./index.css";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <Provider>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </Provider>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById("root")
 );
 
