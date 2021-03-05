@@ -1,5 +1,5 @@
-import type { GraphQLClient } from "graphql-request";
-import type { RequestInit } from "graphql-request/dist/types.dom";
+import { GraphQLClient } from "graphql-request";
+import * as Dom from "graphql-request/dist/types.dom";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -19648,7 +19648,15 @@ export interface ViewerHovercardContext extends HovercardContext {
 
 export type ViewerQueryVariables = Exact<{ [key: string]: never }>;
 
-export type ViewerQuery = { viewer: Pick<User, "name" | "avatarUrl"> };
+export type ViewerQuery = {
+  viewer: Pick<
+    User,
+    "login" | "name" | "bio" | "email" | "location" | "avatarUrl" | "websiteUrl"
+  > & {
+    followers: Pick<FollowerConnection, "totalCount">;
+    repositories: Pick<RepositoryConnection, "totalCount">;
+  };
+};
 
 export type ViewerPopularRepositoriesQueryVariables = Exact<{
   [key: string]: never;
@@ -19671,8 +19679,20 @@ export type ViewerPopularRepositoriesQuery = {
 export const ViewerDocument = /* GraphQL */ `
   query viewer {
     viewer {
+      login
       name
+      bio
+      email
+      location
+      email
       avatarUrl
+      websiteUrl
+      followers {
+        totalCount
+      }
+      repositories {
+        totalCount
+      }
     }
   }
 `;
@@ -19705,7 +19725,7 @@ export function getSdk(
   return {
     viewer(
       variables?: ViewerQueryVariables,
-      requestHeaders?: RequestInit["headers"]
+      requestHeaders?: Dom.RequestInit["headers"]
     ): Promise<ViewerQuery> {
       return withWrapper(() =>
         client.request<ViewerQuery>(ViewerDocument, variables, requestHeaders)
@@ -19713,7 +19733,7 @@ export function getSdk(
     },
     viewerPopularRepositories(
       variables?: ViewerPopularRepositoriesQueryVariables,
-      requestHeaders?: RequestInit["headers"]
+      requestHeaders?: Dom.RequestInit["headers"]
     ): Promise<ViewerPopularRepositoriesQuery> {
       return withWrapper(() =>
         client.request<ViewerPopularRepositoriesQuery>(

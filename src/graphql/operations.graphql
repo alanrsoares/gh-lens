@@ -1,0 +1,35 @@
+query viewer {
+  viewer {
+    login
+    name
+    bio
+    email
+    location
+    email
+    avatarUrl
+    websiteUrl
+    followers {
+      totalCount
+    }
+    repositories {
+      totalCount
+    }
+  }
+}
+
+query viewerPopularRepositories {
+  viewer {
+    name
+    repositories(
+      orderBy: { field: STARGAZERS, direction: DESC }
+      ownerAffiliations: OWNER
+      first: 30
+    ) {
+      nodes {
+        name
+        stargazerCount
+        viewerCanAdminister
+      }
+    }
+  }
+}
