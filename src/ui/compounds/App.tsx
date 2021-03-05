@@ -27,7 +27,7 @@ function App() {
 
       const response = await client.startGithubOauth(code);
 
-      if (response.data) {
+      if (response.data.access_token) {
         actions.signIn(response.data.access_token);
       }
     }
@@ -42,7 +42,7 @@ function App() {
       ) : (
         <a
           href={GH_AUTHORIZE_ENDPOINT}
-          className="w-full max-w-md bg-gray-800 p-4 rounded-md text-white"
+          className="w-full max-w-xs bg-gray-800 p-4 rounded-md text-white"
         >
           Sign in with Github
         </a>
