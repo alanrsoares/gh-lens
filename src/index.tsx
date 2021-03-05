@@ -5,8 +5,9 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import reportWebVitals from "reportWebVitals";
 
-import App from "ui/compounds/App";
 import { Provider } from "state/app";
+
+import App from "ui/pages/App";
 
 import "./index.css";
 

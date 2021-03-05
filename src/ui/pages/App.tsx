@@ -1,20 +1,20 @@
 import { useEffect } from "react";
 import qs from "query-string";
-
-import "./App.css";
+import { GoMarkGithub } from "react-icons/go";
 
 import { GH_AUTHORIZE_ENDPOINT } from "lib/github-oauth";
 import * as client from "lib/netlify-lambda-client";
 
 import { useContainer } from "state/app";
 
-import Authenticated from "./Authenticated";
+import Authenticated from "ui/compounds/Authenticated";
 
-function App() {
+const App: React.FC = () => {
   const [state, actions] = useContainer();
 
   useEffect(() => {
     if (state.isAuthenticated) {
+      // already authenticated, nothing to do here.
       return;
     }
 
@@ -27,7 +27,7 @@ function App() {
 
       const response = await client.startGithubOauth(code);
 
-      if (response.data) {
+      if (response.data.access_token) {
         actions.signIn(response.data.access_token);
       }
     }
@@ -42,13 +42,14 @@ function App() {
       ) : (
         <a
           href={GH_AUTHORIZE_ENDPOINT}
-          className="w-full max-w-md bg-gray-800 p-4 rounded-md text-white"
+          className="w-full max-w-xs bg-gray-800 p-4 rounded-md text-white flex items-center justify-center text-lg"
         >
+          <GoMarkGithub className="mr-2" />
           Sign in with Github
         </a>
       )}
     </section>
   );
-}
+};
 
 export default App;
