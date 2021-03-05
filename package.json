@@ -10,17 +10,25 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "axios": "^0.21.1",
+    "graphql-request": "^3.4.0",
+    "query-string": "^6.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-query": "^3.12.0",
     "react-scripts": "4.0.3",
     "typescript": "^4.1.2",
+    "unstated-next": "^1.1.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "ntl dev",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "build:lambda": "netlify-lambda build src/lambda",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "postinstall": "netlify-lambda install"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +47,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.13.9",
+    "@babel/preset-typescript": "^7.13.0",
+    "@craco/craco": "^6.1.1",
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "@types/aws-lambda": "^8.10.72",
+    "autoprefixer": "^9",
+    "netlify-cli": "^3.10.6",
+    "netlify-lambda": "^2.0.3",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

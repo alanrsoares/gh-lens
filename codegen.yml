@@ -1,0 +1,26 @@
+overwrite: true
+schema: "https://docs.github.com/public/schema.docs.graphql"
+documents: "src/**/*.graphql"
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-request"
+    config:
+      documentMode: string
+      enumsAsTypes: true
+      skipTypename: true
+      declarationKind: "interface"
+      scalars:
+        EmailAddress: string
+        DateTime: string
+        Date: string
+
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
+hooks:
+  afterOneFileWrite:
+    - sed -i '' 's/Document = \`/Document = \/\* GraphQL \*\/ \`/'
+    - prettier --write
