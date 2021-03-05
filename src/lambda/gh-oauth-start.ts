@@ -10,6 +10,7 @@ const handler: GHOAuthHandler = async (event) => {
 
     if (code) {
       const result = await githubOAuth.exchangeCodeForAccessToken(code);
+
       if (result) {
         return {
           statusCode: 200,
@@ -17,11 +18,13 @@ const handler: GHOAuthHandler = async (event) => {
         };
       }
     }
+
     return {
       statusCode: 400,
       body: "parameter 'code' is required.",
     };
   } catch (error) {}
+
   return {
     statusCode: 200,
     body: JSON.stringify({ message: "Hello World", event }),

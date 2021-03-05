@@ -5,7 +5,6 @@ query viewer {
     bio
     email
     location
-    email
     avatarUrl
     websiteUrl
     followers {

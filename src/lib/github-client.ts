@@ -3,13 +3,13 @@ import { getSdk } from "generated/graphql";
 import { GraphQLClient as GraphQLClientBase } from "graphql-request";
 
 class GraphQLClient extends GraphQLClientBase {
-  _isAuthenticated = false;
+  private _isAuthenticated = false;
 
-  get isAuthenticated() {
+  public get isAuthenticated() {
     return this._isAuthenticated;
   }
 
-  setAuthorizationToken(token: string) {
+  public setAuthorizationToken(token: string) {
     if (!token) {
       this._isAuthenticated = false;
       throw new Error("Token is required");

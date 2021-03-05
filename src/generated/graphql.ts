@@ -19684,7 +19684,6 @@ export const ViewerDocument = /* GraphQL */ `
       bio
       email
       location
-      email
       avatarUrl
       websiteUrl
       followers {

@@ -21,12 +21,14 @@ function App() {
     async function task() {
       const { code } = qs.parse(window.location.search);
 
-      if (typeof code === "string" && !!code) {
-        const response = await client.startGithubOauth(code);
+      if (!code || typeof code !== "string") {
+        return;
+      }
 
-        if (response.data) {
-          actions.signIn(response.data.access_token);
-        }
+      const response = await client.startGithubOauth(code);
+
+      if (response.data) {
+        actions.signIn(response.data.access_token);
       }
     }
 
@@ -34,7 +36,7 @@ function App() {
   }, [actions, state.isAuthenticated]);
 
   return (
-    <section className="App h-screen w-full flex justify-center items-center">
+    <section className="App h-screen w-full flex justify-center items-center bg-gray-600">
       {state.isAuthenticated ? (
         <Authenticated />
       ) : (

@@ -9,7 +9,7 @@ const Authenticated: React.FC = () => {
   }
 
   return (
-    <div className="max-w-sm border border-black rounded-lg p-4">
+    <div className="max-w-xs border border-black rounded-lg p-4 bg-gray-800 text-white">
       <figure className="p-2">
         <img
           src={data.viewer.avatarUrl}
@@ -21,6 +21,7 @@ const Authenticated: React.FC = () => {
       <div className="text-sm bg-gray-50 rounded-md text-gray-700 p-2">
         {data.viewer.bio}
       </div>
+      <div className="py-2">@{data.viewer.login}</div>
       <div className="p-4">
         <div>{data.viewer.followers.totalCount} followers</div>
         <div>{data.viewer.repositories.totalCount} repositories</div>
