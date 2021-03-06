@@ -4,6 +4,17 @@ import { GiShadowFollower } from "react-icons/gi";
 import { ViewerQuery } from "generated/graphql";
 
 import CenteredWithIcon from "./CenteredWithIcon";
+import { Fragment } from "react";
+
+const toSlug = (x: string) => x.toLowerCase().split(" ").join("-");
+
+const toRows = (x: string) =>
+  x.split("\n").map((x) => (
+    <Fragment key={toSlug(x)}>
+      {x}
+      <br />
+    </Fragment>
+  ));
 
 interface Props {
   viewer: ViewerQuery["viewer"];
@@ -32,16 +43,11 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
         </a>
       </CenteredWithIcon>
     </div>
-    <div className="text-sm bg-gray-50 rounded-md text-gray-700 p-2">
-      <em>
-        {viewer.bio?.split("\n").map((x) => (
-          <>
-            {x}
-            <br />
-          </>
-        ))}
-      </em>
-    </div>
+    {viewer.bio && (
+      <div className="text-sm bg-gray-50 rounded-md text-gray-700 p-2">
+        <em>{toRows(viewer.bio)}</em>
+      </div>
+    )}
     <div className="p-2">
       <CenteredWithIcon IconComponent={GiShadowFollower}>
         {viewer.followers.totalCount} followers
