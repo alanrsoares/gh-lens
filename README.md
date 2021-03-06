@@ -1,7 +1,7 @@
 # GH Lens
 A github explorer application
 
-This repository demonstrate how to develop [JAMStack](https://jamstack.org/) apps on [Netlify](https://www.netlify.com).
+This repository demonstrates how to develop [JAMStack](https://jamstack.org/) apps on [Netlify](https://www.netlify.com).
 You'll learn how to build a github-connected app using OAuth.
 
 We use [Netlify Functions](https://www.netlify.com/products/functions/) as our "backend", powered by [AWS Lambda](https://aws.amazon.com/lambda/).
