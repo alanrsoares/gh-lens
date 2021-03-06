@@ -19,11 +19,15 @@ const App: React.FC = () => {
     }
 
     async function task() {
+      // read code from querySting
       const { code } = qs.parse(window.location.search);
 
       if (!code || typeof code !== "string") {
         return;
       }
+
+      // reset querySting
+      window.history.replaceState({}, "", "/");
 
       const response = await client.startGithubOauth(code);
 
