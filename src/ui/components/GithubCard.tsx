@@ -18,16 +18,31 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
         className="h-36 w-36 rounded-full mx-auto"
       />
     </figure>
-    <h2 className="text-4xl py-2">{viewer.name}</h2>
-    <div className="text-sm bg-gray-50 rounded-md text-gray-700 p-2">
-      {viewer.bio}
-    </div>
     <div className="py-2">
+      <h2 className="text-4xl text-center">{viewer.name}</h2>
       <CenteredWithIcon IconComponent={GoPerson}>
-        @{viewer.login}
+        <a
+          href={`https://github.com/${viewer.login}`}
+          target="__blank"
+          rel="noreferrer"
+          className="text-gray-300"
+          title={`View '${viewer.name}' profile on github`}
+        >
+          @{viewer.login}
+        </a>
       </CenteredWithIcon>
     </div>
-    <div className="p-4">
+    <div className="text-sm bg-gray-50 rounded-md text-gray-700 p-2">
+      <em>
+        {viewer.bio?.split("\n").map((x) => (
+          <>
+            {x}
+            <br />
+          </>
+        ))}
+      </em>
+    </div>
+    <div className="p-2">
       <CenteredWithIcon IconComponent={GiShadowFollower}>
         {viewer.followers.totalCount} followers
       </CenteredWithIcon>
