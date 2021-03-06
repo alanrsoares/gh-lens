@@ -17,6 +17,7 @@
     "dev": "dotenv -e .env.develop ntl dev",
     "start": "craco start",
     "build": "craco build",
+    "prebuild": "yarn build:lambda",
     "test": "craco test",
     "build:lambda": "netlify-lambda build src/lambda",
     "codegen": "graphql-codegen --config codegen.yml",
