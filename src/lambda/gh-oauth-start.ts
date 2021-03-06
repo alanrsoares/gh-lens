@@ -11,7 +11,7 @@ const handler: GHOAuthHandler = async (event) => {
     if (code) {
       const result = await githubOAuth.exchangeCodeForAccessToken(
         code,
-        process.env.REACT_APP_GH_CLIENT_SECRET || ""
+        process.env.GH_CLIENT_SECRET || ""
       );
 
       if (result) {
