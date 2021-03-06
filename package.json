@@ -14,7 +14,7 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "dev": "ntl dev",
+    "dev": "dotenv -e .env.develop ntl dev",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
@@ -60,6 +60,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "autoprefixer": "^9",
+    "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
     "netlify-cli": "^3.10.6",
     "netlify-lambda": "^2.0.3",
