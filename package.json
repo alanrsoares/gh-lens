@@ -20,7 +20,7 @@
     "test": "craco test",
     "build:lambda": "netlify-lambda build src/lambda",
     "codegen": "graphql-codegen --config codegen.yml",
-    "postinstall": "netlify-lambda install"
+    "postinstall": "netlify-lambda install && yarn build:lambda"
   },
   "eslintConfig": {
     "extends": [
