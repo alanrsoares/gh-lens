@@ -2,16 +2,7 @@
   Command = "yarn build"
   Functions = "lambda"
   Publish = "build"
-
-[context.main.build]
-  Command = "dotenv -e .env yarn build"
-  Functions = "lambda"
-  Publish = "build"
-
-[context.main.environment]
-  REACT_APP_GH_CLIENT_ID = "3c44cfed025aa0872b04"
-  REACT_APP_GH_OAUTH_REDIRECT_URL = "https://gh-lens.netlify.app/"
-
+        
 [context.develop.environment]
   REACT_APP_GH_CLIENT_ID = "61bcbf0a23331c885af0"
   REACT_APP_GH_OAUTH_REDIRECT_URL = "http://localhost:8888"
