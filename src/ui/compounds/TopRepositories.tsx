@@ -69,7 +69,10 @@ const TopRepositories: React.FC = () => {
     <section className="bg-white rounded-md p-2 my-4">
       <div className="p-2 font-bold text-lg text-gray-600 flex justify-between">
         Top Repos
-        <select onChange={(e) => selectLanguage(e.target.value)}>
+        <select
+          onChange={(e) => selectLanguage(e.target.value)}
+          value={selectedLanguage}
+        >
           <option value="">Select</option>
           {langsWithCount.map(({ name, count }) => (
             <option value={name} key={name}>
@@ -95,7 +98,10 @@ const TopRepositories: React.FC = () => {
                 </div>
               </div>
               {isSome(repo.languages) && isSome(repo.languages.nodes) && (
-                <RepoLanguages languages={repo.languages.nodes} />
+                <RepoLanguages
+                  languages={repo.languages.nodes}
+                  onLanguageClick={selectLanguage}
+                />
               )}
             </li>
           </a>
