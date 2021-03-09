@@ -1,5 +1,4 @@
-import { GoRepo, GoPerson } from "react-icons/go";
-import { GiShadowFollower } from "react-icons/gi";
+import { GoRepo, GoPerson, GoLocation, GoOrganization } from "react-icons/go";
 
 import { ViewerQuery } from "graphql/generated";
 
@@ -31,17 +30,6 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
     </figure>
     <div className="py-2">
       <h2 className="text-4xl text-center">{viewer.name}</h2>
-      <CenteredWithIcon IconComponent={GoPerson}>
-        <a
-          href={`https://github.com/${viewer.login}`}
-          target="__blank"
-          rel="noreferrer"
-          className="text-gray-300"
-          title={`View '${viewer.name}' profile on github`}
-        >
-          @{viewer.login}
-        </a>
-      </CenteredWithIcon>
     </div>
     {viewer.bio && (
       <div className="text-sm bg-gray-50 rounded-md text-gray-700 p-2">
@@ -49,9 +37,26 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
       </div>
     )}
     <div className="p-2">
-      <CenteredWithIcon IconComponent={GiShadowFollower}>
-        {viewer.followers.totalCount} followers
+      <CenteredWithIcon IconComponent={GoPerson}>
+        <a
+          href={`https://github.com/${viewer.login}`}
+          target="__blank"
+          rel="noreferrer"
+          title={`View '${viewer.name}' profile on github`}
+        >
+          @{viewer.login}
+        </a>
       </CenteredWithIcon>
+      {viewer.location && (
+        <CenteredWithIcon IconComponent={GoLocation}>
+          {viewer.location}
+        </CenteredWithIcon>
+      )}
+      {viewer.followers.totalCount && (
+        <CenteredWithIcon IconComponent={GoOrganization}>
+          {viewer.followers.totalCount} followers
+        </CenteredWithIcon>
+      )}
       <CenteredWithIcon IconComponent={GoRepo}>
         {viewer.repositories.totalCount} repositories
       </CenteredWithIcon>
