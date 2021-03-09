@@ -1,7 +1,7 @@
 import { GoRepo, GoPerson } from "react-icons/go";
 import { GiShadowFollower } from "react-icons/gi";
 
-import { ViewerQuery } from "generated/graphql";
+import { ViewerQuery } from "graphql/generated";
 
 import CenteredWithIcon from "./CenteredWithIcon";
 import { Fragment } from "react";

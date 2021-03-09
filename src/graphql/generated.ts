@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
-import * as Dom from "graphql-request/dist/types.dom";
+import { useQuery, UseQueryOptions } from "react-query";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
@@ -8,6 +8,15 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
   { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
   { [SubKey in K]: Maybe<T[SubKey]> };
+
+function fetcher<TData, TVariables>(
+  client: GraphQLClient,
+  query: string,
+  variables?: TVariables
+) {
+  return async (): Promise<TData> =>
+    client.request<TData, TVariables>(query, variables);
+}
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
   ID: string;
@@ -19659,16 +19668,23 @@ export type ViewerQuery = {
 };
 
 export type ViewerPopularRepositoriesQueryVariables = Exact<{
-  [key: string]: never;
+  topRepositories: Scalars["Int"];
 }>;
 
 export type ViewerPopularRepositoriesQuery = {
-  viewer: Pick<User, "name"> & {
+  viewer: Pick<User, "login"> & {
     repositories: {
       nodes?: Maybe<
         Array<
           Maybe<
-            Pick<Repository, "name" | "stargazerCount" | "viewerCanAdminister">
+            Pick<
+              Repository,
+              "name" | "stargazerCount" | "viewerCanAdminister"
+            > & {
+              languages?: Maybe<{
+                nodes?: Maybe<Array<Maybe<Pick<Language, "name" | "color">>>>;
+              }>;
+            }
           >
         >
       >;
@@ -19695,53 +19711,58 @@ export const ViewerDocument = /* GraphQL */ `
     }
   }
 `;
+export const useViewerQuery = <TData = ViewerQuery, TError = unknown>(
+  client: GraphQLClient,
+  variables?: ViewerQueryVariables,
+  options?: UseQueryOptions<ViewerQuery, TError, TData>
+) =>
+  useQuery<ViewerQuery, TError, TData>(
+    ["viewer", variables],
+    fetcher<ViewerQuery, ViewerQueryVariables>(
+      client,
+      ViewerDocument,
+      variables
+    ),
+    options
+  );
 export const ViewerPopularRepositoriesDocument = /* GraphQL */ `
-  query viewerPopularRepositories {
+  query viewerPopularRepositories($topRepositories: Int!) {
     viewer {
-      name
+      login
       repositories(
-        orderBy: { field: STARGAZERS, direction: DESC }
+        first: $topRepositories
         ownerAffiliations: OWNER
-        first: 30
+        isFork: false
+        orderBy: { field: STARGAZERS, direction: DESC }
       ) {
         nodes {
           name
           stargazerCount
           viewerCanAdminister
+          languages(first: 3, orderBy: { field: SIZE, direction: DESC }) {
+            nodes {
+              name
+              color
+            }
+          }
         }
       }
     }
   }
 `;
-
-export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
-
-const defaultWrapper: SdkFunctionWrapper = (sdkFunction) => sdkFunction();
-export function getSdk(
+export const useViewerPopularRepositoriesQuery = <
+  TData = ViewerPopularRepositoriesQuery,
+  TError = unknown
+>(
   client: GraphQLClient,
-  withWrapper: SdkFunctionWrapper = defaultWrapper
-) {
-  return {
-    viewer(
-      variables?: ViewerQueryVariables,
-      requestHeaders?: Dom.RequestInit["headers"]
-    ): Promise<ViewerQuery> {
-      return withWrapper(() =>
-        client.request<ViewerQuery>(ViewerDocument, variables, requestHeaders)
-      );
-    },
-    viewerPopularRepositories(
-      variables?: ViewerPopularRepositoriesQueryVariables,
-      requestHeaders?: Dom.RequestInit["headers"]
-    ): Promise<ViewerPopularRepositoriesQuery> {
-      return withWrapper(() =>
-        client.request<ViewerPopularRepositoriesQuery>(
-          ViewerPopularRepositoriesDocument,
-          variables,
-          requestHeaders
-        )
-      );
-    },
-  };
-}
-export type Sdk = ReturnType<typeof getSdk>;
+  variables: ViewerPopularRepositoriesQueryVariables,
+  options?: UseQueryOptions<ViewerPopularRepositoriesQuery, TError, TData>
+) =>
+  useQuery<ViewerPopularRepositoriesQuery, TError, TData>(
+    ["viewerPopularRepositories", variables],
+    fetcher<
+      ViewerPopularRepositoriesQuery,
+      ViewerPopularRepositoriesQueryVariables
+    >(client, ViewerPopularRepositoriesDocument, variables),
+    options
+  );

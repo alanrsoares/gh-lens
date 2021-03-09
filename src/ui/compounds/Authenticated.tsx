@@ -1,10 +1,11 @@
-import { sdk } from "lib/github-client";
-import { useQuery } from "react-query";
+import { useViewerQuery } from "graphql/generated";
 
+import client from "lib/github-client";
 import GithubCard from "ui/components/GithubCard";
+import PopularRepositories from "./PopularRepositories";
 
 const Authenticated: React.FC = () => {
-  const { data, isLoading, error } = useQuery("viewer", () => sdk.viewer());
+  const { data, isLoading, error } = useViewerQuery(client);
 
   if (isLoading) {
     return (
@@ -26,7 +27,12 @@ const Authenticated: React.FC = () => {
     );
   }
 
-  return <GithubCard viewer={data.viewer} />;
+  return (
+    <div>
+      <GithubCard viewer={data.viewer} />
+      <PopularRepositories />
+    </div>
+  );
 };
 
 export default Authenticated;

@@ -16,18 +16,25 @@ query viewer {
   }
 }
 
-query viewerPopularRepositories {
+query viewerPopularRepositories($topRepositories: Int!) {
   viewer {
-    name
+    login
     repositories(
-      orderBy: { field: STARGAZERS, direction: DESC }
+      first: $topRepositories
       ownerAffiliations: OWNER
-      first: 30
+      isFork: false
+      orderBy: { field: STARGAZERS, direction: DESC }
     ) {
       nodes {
         name
         stargazerCount
         viewerCanAdminister
+        languages(first: 3, orderBy: { field: SIZE, direction: DESC }) {
+          nodes {
+            name
+            color
+          }
+        }
       }
     }
   }

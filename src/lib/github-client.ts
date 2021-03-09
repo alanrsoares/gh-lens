@@ -1,5 +1,3 @@
-import { getSdk } from "generated/graphql";
-
 import { GraphQLClient as GraphQLClientBase } from "graphql-request";
 
 class GraphQLClient extends GraphQLClientBase {
@@ -28,5 +26,3 @@ const client = new GraphQLClient(GH_BASE_URL, {
 });
 
 export default client;
-
-export const sdk = getSdk(client);
