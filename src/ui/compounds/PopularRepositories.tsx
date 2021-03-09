@@ -1,36 +1,11 @@
 import { GoStar } from "react-icons/go";
-import { darken } from "polished";
 
 import client from "lib/github-client";
-
-import {
-  useViewerPopularRepositoriesQuery,
-  Language,
-  Maybe,
-} from "graphql/generated";
 import { isSome } from "lib/maybe";
 
-const RepoLanguages: React.FC<{
-  languages: Maybe<Pick<Language, "name" | "color">>[];
-}> = ({ languages }) => {
-  return (
-    <div className="border-dotted border-gray-300 border-t-2 mt-2 pt-1">
-      <ul className="flex">
-        {languages.filter(isSome).map((node) => (
-          <li
-            key={node.name}
-            className="rounded-xl bg-red-50 my-1 mr-1 px-2 text-white font-bold"
-            style={{
-              backgroundColor: darken(0.1, node.color || ""),
-            }}
-          >
-            {node.name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+import RepoLanguages from "ui/components/RepoLanguages";
+
+import { useViewerPopularRepositoriesQuery } from "graphql/generated";
 
 const PopularRepositories: React.FC = () => {
   const { data, isLoading, error } = useViewerPopularRepositoriesQuery(client, {
