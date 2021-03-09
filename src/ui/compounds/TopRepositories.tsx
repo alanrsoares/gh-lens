@@ -88,8 +88,9 @@ const TopRepositories: React.FC = () => {
             target="__blank"
             rel="noopener noreferrer"
             title={`Go to repository ${repo.name}`}
+            key={repo.name}
           >
-            <li key={repo.name} className="p-2 bg-gray-100 mb-2 rounded-md">
+            <li className="p-2 bg-gray-100 mb-2 rounded-md">
               <div className="flex items-center justify-between">
                 <div className="text-blue-800 font-bold">{repo.name}</div>
                 <div className="ml-1 flex items-center text-white bg-gray-500 rounded-xl px-2">
