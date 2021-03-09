@@ -2,7 +2,7 @@ import { useViewerQuery } from "graphql/generated";
 
 import client from "lib/github-client";
 import GithubCard from "ui/components/GithubCard";
-import PopularRepositories from "./PopularRepositories";
+import TopRepositories from "./TopRepositories";
 
 const Authenticated: React.FC = () => {
   const { data, isLoading, error } = useViewerQuery(client);
@@ -30,7 +30,7 @@ const Authenticated: React.FC = () => {
   return (
     <div>
       <GithubCard viewer={data.viewer} />
-      <PopularRepositories />
+      <TopRepositories />
     </div>
   );
 };
