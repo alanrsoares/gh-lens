@@ -40,7 +40,7 @@ const App: React.FC = () => {
   }, [actions, state.isAuthenticated]);
 
   return (
-    <section className="min-h-screen w-full grid place-items-center bg-gray-600">
+    <section className="min-h-screen w-full grid place-items-center">
       {state.isAuthenticated ? (
         <Authenticated />
       ) : (

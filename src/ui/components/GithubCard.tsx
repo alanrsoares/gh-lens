@@ -31,7 +31,7 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
       <img
         src={viewer.avatarUrl}
         alt="Github avatar"
-        className="h-36 w-36 rounded-full mx-auto"
+        className="md:h-36 md:w-36 h-32 w-32 rounded-full mx-auto"
       />
     </figure>
     <div className="py-2 text-center">
@@ -74,19 +74,16 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
           {viewer.location}
         </CenteredWithIcon>
       )}
+      {viewer.repositories.totalCount && (
+        <CenteredWithIcon IconComponent={GoRepo}>
+          {viewer.repositories.totalCount} repositories
+        </CenteredWithIcon>
+      )}
       {viewer.followers.totalCount && (
         <CenteredWithIcon IconComponent={GoOrganization}>
           {viewer.followers.totalCount} followers
         </CenteredWithIcon>
       )}
-      <div className="flex justify-between">
-        <CenteredWithIcon IconComponent={GoRepo}>
-          {viewer.repositories.totalCount} repositories
-        </CenteredWithIcon>
-        <CenteredWithIcon IconComponent={GoOrganization}>
-          {viewer.followers.totalCount} followers
-        </CenteredWithIcon>
-      </div>
     </div>
   </div>
 );
