@@ -71,10 +71,11 @@ const TopRepositories: React.FC = () => {
       <div className="p-2 font-bold text-lg text-gray-600 flex justify-between">
         Top Repos
         <select
+          className="bg-white p-2"
           onChange={(e) => selectLanguage(e.target.value)}
           value={selectedLanguage}
         >
-          <option value="">Select</option>
+          <option value="">Pick a language</option>
           {langsWithCount.map(({ name, count }) => (
             <option value={name} key={name}>
               {name} ({padSingleDigit(count)})
