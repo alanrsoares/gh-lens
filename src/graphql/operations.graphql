@@ -7,6 +7,7 @@ query viewer {
     location
     avatarUrl
     websiteUrl
+    company
     followers {
       totalCount
     }

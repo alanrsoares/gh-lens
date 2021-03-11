@@ -5,9 +5,10 @@ import client from "lib/github-client";
 import { isSome } from "lib/maybe";
 import { padSingleDigit, unique } from "lib/utils";
 
-import RepoLanguages from "ui/components/RepoLanguages";
-
 import { useViewerPopularRepositoriesQuery } from "graphql/generated";
+
+import RepoLanguages from "ui/components/RepoLanguages";
+import Loading from "ui/components/Loading";
 
 const TopRepositories: React.FC = () => {
   const { data, isLoading, error } = useViewerPopularRepositoriesQuery(client, {
@@ -17,11 +18,11 @@ const TopRepositories: React.FC = () => {
   const [selectedLanguage, selectLanguage] = useState("");
 
   if (isLoading) {
-    return <div>Loading repositories...</div>;
+    return <Loading>Loading repositories...</Loading>;
   }
 
   if (!data || error) {
-    return <div>Something went wrong...</div>;
+    return <Loading>Something went wrong...</Loading>;
   }
 
   if (!data.viewer.repositories.nodes) {
@@ -66,7 +67,7 @@ const TopRepositories: React.FC = () => {
     : repositories;
 
   return (
-    <section className="bg-white rounded-md p-2 my-4">
+    <section className="bg-white md:rounded-md p-2 mt-4">
       <div className="p-2 font-bold text-lg text-gray-600 flex justify-between">
         Top Repos
         <select
@@ -81,7 +82,7 @@ const TopRepositories: React.FC = () => {
           ))}
         </select>
       </div>
-      <ul className="h-56 overflow-x-scroll">
+      <ul className="max-h-56 overflow-x-scroll">
         {filteredRepos.map((repo) => (
           <a
             href={`https://github.com/${data.viewer.login}/${repo.name}`}

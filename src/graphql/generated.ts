@@ -9798,7 +9798,7 @@ export interface Organization
   isSponsoredBy: Scalars["Boolean"];
   /** True if the viewer is sponsored by this user/organization. */
   isSponsoringViewer: Scalars["Boolean"];
-  /** Whether the organization has verified its profile email and website, always false on Enterprise. */
+  /** Whether the organization has verified its profile email and website. */
   isVerified: Scalars["Boolean"];
   /**
    * Showcases a selection of repositories and gists that the profile owner has
@@ -19660,7 +19660,14 @@ export type ViewerQueryVariables = Exact<{ [key: string]: never }>;
 export type ViewerQuery = {
   viewer: Pick<
     User,
-    "login" | "name" | "bio" | "email" | "location" | "avatarUrl" | "websiteUrl"
+    | "login"
+    | "name"
+    | "bio"
+    | "email"
+    | "location"
+    | "avatarUrl"
+    | "websiteUrl"
+    | "company"
   > & {
     followers: Pick<FollowerConnection, "totalCount">;
     repositories: Pick<RepositoryConnection, "totalCount">;
@@ -19702,6 +19709,7 @@ export const ViewerDocument = /* GraphQL */ `
       location
       avatarUrl
       websiteUrl
+      company
       followers {
         totalCount
       }

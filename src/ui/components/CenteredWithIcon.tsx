@@ -4,7 +4,7 @@ const CenteredWithIcon: React.FC<{ IconComponent: IconType }> = ({
   IconComponent,
   children,
 }) => (
-  <div className="flex items-center">
+  <div className="flex items-center py-1">
     <IconComponent className="mr-2" /> {children}
   </div>
 );

@@ -2,17 +2,14 @@ import { useViewerQuery } from "graphql/generated";
 
 import client from "lib/github-client";
 import GithubCard from "ui/components/GithubCard";
+import Loading from "ui/components/Loading";
 import TopRepositories from "./TopRepositories";
 
 const Authenticated: React.FC = () => {
   const { data, isLoading, error } = useViewerQuery(client);
 
   if (isLoading) {
-    return (
-      <div className="max-w-xs border border-black rounded-lg p-4 bg-gray-800 text-white">
-        Loading viewer...
-      </div>
-    );
+    return <Loading>Loading viewer...</Loading>;
   }
 
   if (error || !data) {
@@ -20,11 +17,7 @@ const Authenticated: React.FC = () => {
       console.log("Something went wrong!", error);
     }
 
-    return (
-      <div className="max-w-xs border border-black rounded-lg p-4 bg-gray-800 text-white">
-        Something went wrong!
-      </div>
-    );
+    return <Loading>Something went wrong!</Loading>;
   }
 
   return (

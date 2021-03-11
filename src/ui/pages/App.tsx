@@ -40,13 +40,13 @@ const App: React.FC = () => {
   }, [actions, state.isAuthenticated]);
 
   return (
-    <section className="App h-screen w-full flex justify-center items-center bg-gray-600">
+    <section className="min-h-screen w-full grid place-items-center bg-gray-600">
       {state.isAuthenticated ? (
         <Authenticated />
       ) : (
         <a
           href={GH_AUTHORIZE_ENDPOINT}
-          className="w-full max-w-xs bg-gray-800 p-4 rounded-md text-white flex items-center justify-center text-lg"
+          className="max-w-xs w-full bg-gray-800 p-4 rounded-md text-white flex items-center justify-center text-lg"
         >
           <GoMarkGithub className="mr-2" />
           Sign in with Github

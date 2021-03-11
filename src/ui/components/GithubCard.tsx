@@ -1,4 +1,10 @@
-import { GoRepo, GoPerson, GoLocation, GoOrganization } from "react-icons/go";
+import {
+  GoRepo,
+  GoLocation,
+  GoOrganization,
+  GoBriefcase,
+  GoGlobe,
+} from "react-icons/go";
 
 import { ViewerQuery } from "graphql/generated";
 
@@ -20,7 +26,7 @@ interface Props {
 }
 
 const GithubCard: React.FC<Props> = ({ viewer }) => (
-  <div className="max-w-xs border border-black rounded-lg p-4 bg-gray-800 text-white">
+  <div className="md:border md:border-black md:rounded-lg p-4 bg-gray-800 text-white">
     <figure className="p-2">
       <img
         src={viewer.avatarUrl}
@@ -28,8 +34,17 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
         className="h-36 w-36 rounded-full mx-auto"
       />
     </figure>
-    <div className="py-2">
+    <div className="py-2 text-center">
       <h2 className="text-4xl text-center">{viewer.name}</h2>
+      <a
+        className="text-gray-300 text-sm"
+        href={`https://github.com/${viewer.login}`}
+        target="__blank"
+        rel="noreferrer noopener"
+        title={`View ${viewer.name}'s profile on Github`}
+      >
+        {viewer.login}
+      </a>
     </div>
     {viewer.bio && (
       <div className="text-sm bg-gray-50 rounded-md text-gray-700 p-2">
@@ -37,16 +52,23 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
       </div>
     )}
     <div className="p-2">
-      <CenteredWithIcon IconComponent={GoPerson}>
-        <a
-          href={`https://github.com/${viewer.login}`}
-          target="__blank"
-          rel="noreferrer"
-          title={`View '${viewer.name}' profile on github`}
-        >
-          @{viewer.login}
-        </a>
-      </CenteredWithIcon>
+      {viewer.websiteUrl && (
+        <CenteredWithIcon IconComponent={GoGlobe}>
+          <a
+            href={viewer.websiteUrl}
+            target="__blank"
+            rel="noreferrer noopener"
+            title={`Go to '${viewer.name}' website`}
+          >
+            {viewer.websiteUrl}
+          </a>
+        </CenteredWithIcon>
+      )}
+      {viewer.company && (
+        <CenteredWithIcon IconComponent={GoBriefcase}>
+          {viewer.company}
+        </CenteredWithIcon>
+      )}
       {viewer.location && (
         <CenteredWithIcon IconComponent={GoLocation}>
           {viewer.location}
@@ -57,9 +79,14 @@ const GithubCard: React.FC<Props> = ({ viewer }) => (
           {viewer.followers.totalCount} followers
         </CenteredWithIcon>
       )}
-      <CenteredWithIcon IconComponent={GoRepo}>
-        {viewer.repositories.totalCount} repositories
-      </CenteredWithIcon>
+      <div className="flex justify-between">
+        <CenteredWithIcon IconComponent={GoRepo}>
+          {viewer.repositories.totalCount} repositories
+        </CenteredWithIcon>
+        <CenteredWithIcon IconComponent={GoOrganization}>
+          {viewer.followers.totalCount} followers
+        </CenteredWithIcon>
+      </div>
     </div>
   </div>
 );
