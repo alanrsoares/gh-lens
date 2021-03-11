@@ -60,11 +60,11 @@ const TopRepositories: React.FC = () => {
     // sort by count descending
     .sort((a, b) => b.count - a.count);
 
-  const filteredRepos = selectedLanguage
-    ? repositories.filter((repo) =>
+  const filteredRepos = !selectedLanguage
+    ? repositories
+    : repositories.filter((repo) =>
         repo.languages?.nodes?.some((lang) => lang?.name === selectedLanguage)
-      )
-    : repositories;
+      );
 
   return (
     <section className="bg-white md:rounded-md p-2 mt-4">
