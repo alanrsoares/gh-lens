@@ -1,6 +1,8 @@
 # GH Lens
 A github explorer application
 
+<img src="/public/logo.png" height="128px" width="128px" />
+
 This repository demonstrates how to develop [JAMStack](https://jamstack.org/) apps on [Netlify](https://www.netlify.com).
 You'll learn how to build a github-connected app using OAuth.
 
