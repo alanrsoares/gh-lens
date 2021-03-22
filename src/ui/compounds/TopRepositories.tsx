@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { GoStar } from "react-icons/go";
 
 import client from "lib/github-client";
@@ -9,6 +9,8 @@ import { useViewerPopularRepositoriesQuery } from "graphql/generated";
 
 import RepoLanguages from "ui/components/RepoLanguages";
 import Loading from "ui/components/Loading";
+import { ErrorBoundary } from "react-error-boundary";
+import { useQueryErrorResetBoundary } from "react-query";
 
 const TopRepositories: React.FC = () => {
   const { data, isLoading, error } = useViewerPopularRepositoriesQuery(client, {
@@ -18,7 +20,7 @@ const TopRepositories: React.FC = () => {
   const [selectedLanguage, selectLanguage] = useState("");
 
   if (isLoading) {
-    return <Loading>Loading repositories...</Loading>;
+    return null;
   }
 
   if (!data || error) {
@@ -114,4 +116,22 @@ const TopRepositories: React.FC = () => {
   );
 };
 
-export default TopRepositories;
+export default function TopRepositoriesLoader() {
+  const { reset } = useQueryErrorResetBoundary();
+
+  return (
+    <ErrorBoundary
+      onReset={reset}
+      fallbackRender={({ resetErrorBoundary }) => (
+        <div>
+          There was an error!
+          <button onClick={() => resetErrorBoundary()}>Try again</button>
+        </div>
+      )}
+    >
+      <Suspense fallback={<Loading>Loading repositories...</Loading>}>
+        <TopRepositories />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}

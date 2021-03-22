@@ -1,23 +1,20 @@
+import { Suspense } from "react";
+
 import { useViewerQuery } from "graphql/generated";
 
 import client from "lib/github-client";
+
 import GithubCard from "ui/components/GithubCard";
 import Loading from "ui/components/Loading";
+import ErrorBoundaryWithFallback from "ui/components/ErrorBoundaryWithFallback";
+
 import TopRepositories from "./TopRepositories";
 
 const Authenticated: React.FC = () => {
-  const { data, isLoading, error } = useViewerQuery(client);
+  const { data } = useViewerQuery(client);
 
-  if (isLoading) {
-    return <Loading>Loading viewer...</Loading>;
-  }
-
-  if (error || !data) {
-    if (error) {
-      console.log("Something went wrong!", error);
-    }
-
-    return <Loading>Something went wrong!</Loading>;
+  if (!data) {
+    return null;
   }
 
   return (
@@ -28,4 +25,12 @@ const Authenticated: React.FC = () => {
   );
 };
 
-export default Authenticated;
+export default function AuthenticatedLoader() {
+  return (
+    <ErrorBoundaryWithFallback>
+      <Suspense fallback={<Loading>Loading viewer...</Loading>}>
+        <Authenticated />
+      </Suspense>
+    </ErrorBoundaryWithFallback>
+  );
+}
