@@ -5,7 +5,7 @@ import { GoRepo } from "react-icons/go";
 import CenteredWithIcon from "../../components/CenteredWithIcon";
 
 test("renders with icon component and children", () => {
-  let { screen } = createTest(
+  const { screen } = createTest(
     <CenteredWithIcon IconComponent={GoRepo}>Hello World!</CenteredWithIcon>
   );
   expect(

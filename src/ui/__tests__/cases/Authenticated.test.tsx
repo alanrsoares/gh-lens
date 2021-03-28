@@ -16,7 +16,7 @@ import client from "lib/github-client";
 jest.mock("lib/github-client");
 
 describe("<Authenticated />", () => {
-  let clientRequestMock = client.request as jest.Mock;
+  const clientRequestMock = client.request as jest.Mock;
 
   afterEach(() => {
     clientRequestMock.mockReset();
@@ -27,7 +27,7 @@ describe("<Authenticated />", () => {
       return Promise.reject();
     });
 
-    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+    const { screen, waitForElementToBeRemoved } = createTestCompounds(
       <Authenticated />
     );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe("<Authenticated />", () => {
       return Promise.resolve();
     });
 
-    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+    const { screen, waitForElementToBeRemoved } = createTestCompounds(
       <Authenticated />
     );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
@@ -65,7 +65,7 @@ describe("<Authenticated />", () => {
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+    const { screen, waitForElementToBeRemoved } = createTestCompounds(
       <Authenticated />
     );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
@@ -98,7 +98,7 @@ describe("<Authenticated />", () => {
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+    const { screen, waitForElementToBeRemoved } = createTestCompounds(
       <Authenticated />
     );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
@@ -134,7 +134,7 @@ describe("<Authenticated />", () => {
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+    const { screen, waitForElementToBeRemoved } = createTestCompounds(
       <Authenticated />
     );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
@@ -167,7 +167,7 @@ describe("<Authenticated />", () => {
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+    const { screen, waitForElementToBeRemoved } = createTestCompounds(
       <Authenticated />
     );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
