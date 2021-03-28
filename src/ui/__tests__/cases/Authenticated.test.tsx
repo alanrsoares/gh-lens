@@ -1,21 +1,23 @@
-import { waitForElementToBeRemoved } from "@testing-library/react";
-
 import Authenticated from "../../compounds/Authenticated";
 
 // *****
 // Test Utilities
 // *****
 import { createTestCompounds } from "../config/create-test-compounds";
-import { createValidUseViewerQueryResponse } from "../fixtures/payloads";
+import {
+  createValidUseViewerQueryResponse,
+  createValidViewerPopularRepositoriesResponse,
+} from "../fixtures/payloads";
 
 // *****
-// HTTP Request Mock
+// GitHub Client Request Mock
 // *****
 import client from "lib/github-client";
 jest.mock("lib/github-client");
-let clientRequestMock = client.request as jest.Mock;
 
 describe("<Authenticated />", () => {
+  let clientRequestMock = client.request as jest.Mock;
+
   afterEach(() => {
     clientRequestMock.mockReset();
   });
@@ -25,7 +27,9 @@ describe("<Authenticated />", () => {
       return Promise.reject();
     });
 
-    let screen = createTestCompounds(<Authenticated />);
+    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+      <Authenticated />
+    );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
 
     await waitForElementToBeRemoved(() =>
@@ -43,7 +47,9 @@ describe("<Authenticated />", () => {
       return Promise.resolve();
     });
 
-    let screen = createTestCompounds(<Authenticated />);
+    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+      <Authenticated />
+    );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
 
     await waitForElementToBeRemoved(() =>
@@ -59,7 +65,9 @@ describe("<Authenticated />", () => {
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let screen = createTestCompounds(<Authenticated />);
+    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+      <Authenticated />
+    );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
 
     await waitForElementToBeRemoved(() =>
@@ -90,7 +98,9 @@ describe("<Authenticated />", () => {
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let screen = createTestCompounds(<Authenticated />);
+    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+      <Authenticated />
+    );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
 
     await waitForElementToBeRemoved(() =>
@@ -114,15 +124,19 @@ describe("<Authenticated />", () => {
   test("loading => data => no top repositories to display", async () => {
     clientRequestMock.mockImplementation((params) => {
       if (params.includes("viewerPopularRepositories")) {
-        return Promise.resolve({
-          viewer: { repositories: { nodes: undefined } },
-        });
+        return Promise.resolve(
+          createValidViewerPopularRepositoriesResponse({
+            repositories: { nodes: undefined },
+          })
+        );
       }
 
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let screen = createTestCompounds(<Authenticated />);
+    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+      <Authenticated />
+    );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
 
     await waitForElementToBeRemoved(() =>
@@ -147,25 +161,15 @@ describe("<Authenticated />", () => {
   test("loading => data => show top repositories", async () => {
     clientRequestMock.mockImplementation((params) => {
       if (params.includes("viewerPopularRepositories")) {
-        return Promise.resolve({
-          viewer: {
-            repositories: {
-              nodes: [
-                {
-                  languages: ["node", "html"],
-                  name: "my-repo-name",
-                  stargazerCount: 959595,
-                },
-              ],
-            },
-          },
-        });
+        return Promise.resolve(createValidViewerPopularRepositoriesResponse());
       }
 
       return Promise.resolve(createValidUseViewerQueryResponse());
     });
 
-    let screen = createTestCompounds(<Authenticated />);
+    let { screen, waitForElementToBeRemoved } = createTestCompounds(
+      <Authenticated />
+    );
     expect(screen.queryByText("Loading viewer...")).toBeInTheDocument();
 
     await waitForElementToBeRemoved(() =>

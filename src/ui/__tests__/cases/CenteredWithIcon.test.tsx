@@ -1,11 +1,11 @@
-import { render } from "@testing-library/react";
+import { createTest } from "../config/create-test";
 
 import { GoRepo } from "react-icons/go";
 
 import CenteredWithIcon from "../../components/CenteredWithIcon";
 
 test("renders with icon component and children", () => {
-  let screen = render(
+  let { screen } = createTest(
     <CenteredWithIcon IconComponent={GoRepo}>Hello World!</CenteredWithIcon>
   );
   expect(

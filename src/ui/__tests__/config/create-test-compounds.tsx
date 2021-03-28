@@ -1,16 +1,18 @@
-import { render } from "@testing-library/react";
-import { QueryClient, QueryClientProvider, setLogger } from "react-query";
+import * as React from "react";
+import * as ReactQuery from "react-query";
+
+import { createTest } from "./create-test";
 
 import { Provider } from "state/app";
 
-setLogger({
+ReactQuery.setLogger({
   error() {},
   log() {},
   warn() {},
 });
 
-export function createTestCompounds(children: any) {
-  let queryClient = new QueryClient({
+export function createTestCompounds(children: React.ReactElement) {
+  let queryClient = new ReactQuery.QueryClient({
     defaultOptions: {
       queries: {
         retry: false,
@@ -19,10 +21,13 @@ export function createTestCompounds(children: any) {
     },
   });
 
-  let screen = render(
+  let scenario = createTest(
     <Provider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <ReactQuery.QueryClientProvider client={queryClient}>
+        {children}
+      </ReactQuery.QueryClientProvider>
     </Provider>
   );
-  return screen;
+
+  return scenario;
 }
