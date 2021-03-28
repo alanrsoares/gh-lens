@@ -10,12 +10,12 @@ function useAppContainer() {
 
   const handleSignIn = useCallback((token: string) => {
     localStorage.setItem(GH_TOKEN_STORAGE_KEY, token);
-    setIsAuthenticated(true);
     client.setAuthorizationToken(token);
+    setIsAuthenticated(true);
   }, []);
 
   const handleSignOut = useCallback(() => {
-    localStorage.setItem(GH_TOKEN_STORAGE_KEY, "");
+    localStorage.removeItem(GH_TOKEN_STORAGE_KEY);
     setIsAuthenticated(false);
   }, []);
 
