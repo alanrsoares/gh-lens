@@ -18,7 +18,7 @@ const Authenticated: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="max-w-md">
       <GithubCard viewer={data.viewer} />
       <TopRepositories />
     </div>

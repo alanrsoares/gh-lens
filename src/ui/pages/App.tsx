@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import qs from "query-string";
 import { GoMarkGithub } from "react-icons/go";
 
-import { GH_AUTHORIZE_ENDPOINT } from "lib/github-oauth";
-import * as client from "lib/netlify-lambda-client";
+import { GH_AUTHORIZE_ENDPOINT } from "lib/github-oauth-client";
+import * as lambdaClient from "lib/netlify-lambda-client";
 
 import { useContainer } from "state/app";
 
@@ -29,7 +29,7 @@ const App: React.FC = () => {
       // reset querySting
       window.history.replaceState({}, "", "/");
 
-      const response = await client.startGithubOauth(code);
+      const response = await lambdaClient.startGithubOauth(code);
 
       if (response.data.access_token) {
         actions.signIn(response.data.access_token);
