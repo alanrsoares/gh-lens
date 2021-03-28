@@ -1,5 +1,7 @@
 import { Suspense, useState } from "react";
 import { GoStar } from "react-icons/go";
+import { ErrorBoundary } from "react-error-boundary";
+import { useQueryErrorResetBoundary } from "react-query";
 
 import client from "lib/github-client";
 import { isSome } from "lib/maybe";
@@ -9,25 +11,16 @@ import { useViewerPopularRepositoriesQuery } from "graphql/generated";
 
 import RepoLanguages from "ui/components/RepoLanguages";
 import Loading from "ui/components/Loading";
-import { ErrorBoundary } from "react-error-boundary";
-import { useQueryErrorResetBoundary } from "react-query";
 
 const TopRepositories: React.FC = () => {
-  const { data, isLoading, error } = useViewerPopularRepositoriesQuery(client, {
+  const { data } = useViewerPopularRepositoriesQuery(client, {
     topRepositories: 50,
   });
 
   const [selectedLanguage, selectLanguage] = useState("");
+  const [filterText, setFilterText] = useState("");
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (!data || error) {
-    return <Loading>Something went wrong...</Loading>;
-  }
-
-  if (!data.viewer.repositories.nodes) {
+  if (!data?.viewer?.repositories?.nodes) {
     return null;
   }
 
@@ -62,9 +55,13 @@ const TopRepositories: React.FC = () => {
     // sort by count descending
     .sort((a, b) => b.count - a.count);
 
-  const filteredRepos = !selectedLanguage
-    ? repositories
-    : repositories.filter((repo) =>
+  const filteredByText = filterText
+    ? repositories.filter((x) => x.name.includes(filterText))
+    : repositories;
+
+  const filteredByLanguage = !selectedLanguage
+    ? filteredByText
+    : filteredByText.filter((repo) =>
         repo.languages?.nodes?.some((lang) => lang?.name === selectedLanguage)
       );
 
@@ -73,7 +70,7 @@ const TopRepositories: React.FC = () => {
       <div className="p-2 font-bold text-lg text-gray-600 flex justify-between">
         Top Repos
         <select
-          className="bg-white p-2"
+          className="block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           onChange={(e) => selectLanguage(e.target.value)}
           value={selectedLanguage}
         >
@@ -85,8 +82,16 @@ const TopRepositories: React.FC = () => {
           ))}
         </select>
       </div>
+      <div className="p-2">
+        <input
+          type="text"
+          placeholder="filter by name"
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          onChange={(e) => setFilterText(e.target.value)}
+        />
+      </div>
       <ul className="max-h-56 overflow-x-scroll">
-        {filteredRepos.map((repo) => (
+        {filteredByLanguage.map((repo) => (
           <a
             href={`https://github.com/${data.viewer.login}/${repo.name}`}
             target="__blank"
@@ -98,8 +103,7 @@ const TopRepositories: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="text-blue-800 font-bold">{repo.name}</div>
                 <div className="ml-1 flex items-center text-white bg-gray-500 rounded-xl px-2">
-                  {padSingleDigit(repo.stargazerCount)}{" "}
-                  <GoStar className="text-yellow-400" />
+                  {repo.stargazerCount} <GoStar className="text-yellow-400" />
                 </div>
               </div>
               {isSome(repo.languages) && isSome(repo.languages.nodes) && (

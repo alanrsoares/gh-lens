@@ -9,7 +9,7 @@ interface ErrorFallbackProps {
 
 const ErrorFallback: React.FC<ErrorFallbackProps> = (props) => {
   return (
-    <div className="rounded-md bg-red-50 p-4">
+    <div className="rounded-md bg-red-50 p-4 mx-8">
       <div className="flex">
         <div className="flex-shrink-0">
           <HiXCircle />

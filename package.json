@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tailwindcss/forms": "^0.3.2",
     "axios": "^0.21.1",
     "graphql-request": "^3.4.0",
     "polished": "^4.1.1",
@@ -16,7 +17,7 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "dev": "dotenv -e .env.develop ntl dev",
+    "dev": "dotenv -e .env.local ntl dev",
     "start": "craco start",
     "build": "craco build",
     "prebuild": "yarn build:lambda",
