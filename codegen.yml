@@ -23,5 +23,4 @@ generates:
       - "introspection"
 hooks:
   afterOneFileWrite:
-    - sed -i '' 's/Document = \`/Document = \/\* GraphQL \*\/ \`/'
     - prettier --write

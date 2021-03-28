@@ -6461,6 +6461,47 @@
             "deprecationReason": null
           },
           {
+            "name": "isRequired",
+            "description": "Whether this is required to pass before merging for a specific pull request.",
+            "args": [
+              {
+                "name": "pullRequestId",
+                "description": "The id of the pull request this is required for",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "pullRequestNumber",
+                "description": "The number of the pull request this is required for",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "name",
             "description": "The name of the check for this check run.",
             "args": [],
@@ -6610,6 +6651,11 @@
           {
             "kind": "INTERFACE",
             "name": "Node",
+            "ofType": null
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "RequirableByPullRequest",
             "ofType": null
           },
           {
@@ -26743,7 +26789,7 @@
           },
           {
             "name": "isPrivate",
-            "description": "Identifies if the repository is private.",
+            "description": "Identifies if the repository is private or internal.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -67949,6 +67995,30 @@
             "deprecationReason": null
           },
           {
+            "name": "viewerLatestReview",
+            "description": "The latest review given from the viewer.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PullRequestReview",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "viewerLatestReviewRequest",
+            "description": "The person who has requested the viewer for review on this pull request.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ReviewRequest",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "viewerMergeBodyText",
             "description": "The merge body text for the viewer and method.",
             "args": [
@@ -75951,6 +76021,22 @@
             "deprecationReason": null
           },
           {
+            "name": "requiresCodeOwnerReviews",
+            "description": "Are reviews from code owners required to update matching branches.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "requiresLinearHistory",
             "description": "Are merge commits prohibited from being pushed to this branch.",
             "args": [],
@@ -75969,6 +76055,22 @@
           {
             "name": "requiresSignatures",
             "description": "Are commits required to be signed.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "viewerAllowedToDismissReviews",
+            "description": "Is the viewer allowed to dismiss reviews.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -85838,7 +85940,7 @@
           },
           {
             "name": "isPrivate",
-            "description": "Identifies if the repository is private.",
+            "description": "Identifies if the repository is private or internal.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -88988,7 +89090,7 @@
           },
           {
             "name": "isPrivate",
-            "description": "Identifies if the repository is private.",
+            "description": "Identifies if the repository is private or internal.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -91553,6 +91655,69 @@
           {
             "kind": "OBJECT",
             "name": "User",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "RequirableByPullRequest",
+        "description": "Represents a type that can be required by a pull request for merging.",
+        "fields": [
+          {
+            "name": "isRequired",
+            "description": "Whether this is required to pass before merging for a specific pull request.",
+            "args": [
+              {
+                "name": "pullRequestId",
+                "description": "The id of the pull request this is required for",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "pullRequestNumber",
+                "description": "The number of the pull request this is required for",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "CheckRun",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "StatusContext",
             "ofType": null
           }
         ]
@@ -95896,6 +96061,18 @@
             "deprecationReason": null
           },
           {
+            "name": "closestLesserValueTier",
+            "description": "Get a different tier for this tier's maintainer that is at the same frequency\nas this tier but with a lesser cost. Returns the published tier with the\nmonthly price closest to this tier's without going over.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "SponsorsTier",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "createdAt",
             "description": "Identifies the date and time when the object was created.",
             "args": [],
@@ -95953,6 +96130,38 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isCustomAmount",
+            "description": "Whether this tier was chosen at checkout time by the sponsor rather than\ndefined ahead of time by the maintainer who manages the Sponsors listing.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isOneTime",
+            "description": "Whether this tier is only for use with one-time sponsorships.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               }
             },
@@ -96362,6 +96571,22 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isOneTimePayment",
+            "description": "Whether this sponsorship represents a one-time payment versus a recurring sponsorship.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               }
             },
@@ -97712,6 +97937,47 @@
             "deprecationReason": null
           },
           {
+            "name": "isRequired",
+            "description": "Whether this is required to pass before merging for a specific pull request.",
+            "args": [
+              {
+                "name": "pullRequestId",
+                "description": "The id of the pull request this is required for",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "pullRequestNumber",
+                "description": "The number of the pull request this is required for",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "state",
             "description": "The state of this status context.",
             "args": [],
@@ -97745,6 +98011,11 @@
           {
             "kind": "INTERFACE",
             "name": "Node",
+            "ofType": null
+          },
+          {
+            "kind": "INTERFACE",
+            "name": "RequirableByPullRequest",
             "ofType": null
           }
         ],
@@ -116676,7 +116947,9 @@
         "name": "possibleTypes",
         "description": "Defines what type of global IDs are accepted for a mutation argument of type ID.",
         "isRepeatable": false,
-        "locations": ["INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "abstractType",
@@ -116755,7 +117028,11 @@
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -116779,7 +117056,11 @@
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -116828,7 +117109,9 @@
         "name": "specifiedBy",
         "description": "Exposes a URL that specifies the behaviour of this scalar.",
         "isRepeatable": false,
-        "locations": ["SCALAR"],
+        "locations": [
+          "SCALAR"
+        ],
         "args": [
           {
             "name": "url",

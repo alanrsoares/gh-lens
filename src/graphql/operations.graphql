@@ -28,6 +28,7 @@ query viewerPopularRepositories($topRepositories: Int!) {
     ) {
       nodes {
         name
+        description
         stargazerCount
         viewerCanAdminister
         languages(first: 3, orderBy: { field: SIZE, direction: DESC }) {

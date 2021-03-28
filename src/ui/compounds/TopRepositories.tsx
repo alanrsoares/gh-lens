@@ -106,7 +106,8 @@ const TopRepositories: React.FC = () => {
                   {repo.stargazerCount} <GoStar className="text-yellow-400" />
                 </div>
               </div>
-              {isSome(repo.languages) && isSome(repo.languages.nodes) && (
+              {repo.description && <div>{repo.description}</div>}
+              {repo.languages?.nodes && (
                 <RepoLanguages
                   languages={repo.languages.nodes}
                   onLanguageClick={selectLanguage}
