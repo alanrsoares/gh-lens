@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { AccessTokenResponse } from "lib/github-oauth";
+import { AccessTokenResponse } from "lib/github-oauth-client";
 
 const client = axios.create({
   baseURL: ".netlify/functions",

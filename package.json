@@ -48,7 +48,7 @@
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-typescript": "^7.13.0",
     "@craco/craco": "^6.1.1",
-    "@graphql-codegen/cli": "^1.21.1",
+    "@graphql-codegen/cli": "^1.21.3",
     "@graphql-codegen/introspection": "^1.18.1",
     "@graphql-codegen/typescript": "^1.21.1",
     "@graphql-codegen/typescript-document-nodes": "^1.17.10",
